@@ -1,0 +1,45 @@
+monitoring all column
+
+
+SELECT
+    monitoring.Plate_Number,
+    typeviolation.Type,
+    plate.TypePlate,
+    location.Address,
+    provinces.Name,
+    monitoring.Date,
+    monitoring.ImagePath
+FROM
+    camera,
+    provinces,
+    plate,
+    monitoring,
+    typeviolation,
+    location
+WHERE
+    (
+        typeviolation.Id = monitoring.Id_violation AND provinces.Id = monitoring.Id_provinces AND plate.Id = monitoring.Id_plate AND camera.Id = monitoring.Id_camera AND camera.Id_location = location.Id
+    );
+
+
+
+
+SELECT
+    violation.Plate_Number,
+    typeviolation.Type,
+    plate.TypePlate,
+    location.Address,
+    provinces.Name,
+    violation.Date,
+    violation.ImagePath
+FROM
+    camera,
+    provinces,
+    plate,
+    violation,
+    typeviolation,
+    location
+WHERE
+    (
+        typeviolation.Id = violation.Id_violation_Type AND provinces.Id = violation.Id_provinces AND plate.Id = violation.Id_plate AND camera.Id = violation.Id_camera AND camera.Id_location = location.Id
+    );
