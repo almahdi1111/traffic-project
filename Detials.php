@@ -72,27 +72,24 @@ require("header.php");
                                     <th>عرض</th>
                                 </tr>
                             </thead>
-                            <tbody id="DataTable">
-
-                           <?php 
-                          // displayfromTable::displayviolation(); 
-                         // echo count(DatabaseOpreation::select("monitoring"));
-
-                           ?>
-                            </tbody>
+                         <tbody id="DataTable">
+                         </tbody>
                             
                         </table>
                     
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                        
-                    </nav>
+                        <ul class="pagination" >
+                        <?php 
+                        $pageName=substr($_SERVER["SCRIPT_NAME"],9);
+
+                        $pageCount=pagination::RowsCount("violation")/pagination::$RowsCountPerPage;
+                        for($i=0;$i<$pageCount;$i++)
+                        {
+                            echo"<li class='page-item' onclick=\"paging($i,'$pageName')\"><a class='page-link'>".($i+1)."</a></li>";
+                        }
+
+                        ?>
+                       </ul>
+
                     </div>
                 </div>
             </div>

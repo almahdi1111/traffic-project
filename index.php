@@ -33,14 +33,22 @@ require("header.php");
                                     <th>عرض</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center" id="DataTableMonitoring">
-                            <?php 
-                            
-                           // displayfromTable::displaymonitoring(); 
-
-                           ?>
+                            <tbody class="text-center" id="DataTable">
                             </tbody>
                         </table>
+                        <ul class="pagination" >
+                        <?php 
+                        $pageName=substr($_SERVER["SCRIPT_NAME"],9);
+                       $pageCount=pagination::RowsCount("monitoring")/pagination::$RowsCountPerPage;
+                        for($i=0;$i<$pageCount;$i++)
+                        {
+                            echo"<li class='page-item' onclick=\"paging($i,'$pageName')\"><a class='page-link'>".($i+1)."</a></li>";
+                        }
+
+                        
+                        ?>
+               
+                    </ul>
                     </div>
                 </div>
             </div>

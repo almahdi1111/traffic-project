@@ -16,11 +16,25 @@ require("DatabaseOpreation.php");
     <link rel="stylesheet" href="assets/css/styles.min.css">
 </head>
 
-<body onload="GetMonitoringData('')">
+<body onload="paging(
+    <?php
+
+    if(isset($_GET['pagenumber']))
+
+    echo $_GET['pagenumber'];
+
+    else echo "0";
+     echo ",'";
+
+    echo substr($_SERVER['SCRIPT_NAME'],9)."'";
+     ?>
+     )"
+     >
+
+
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean">
         <div class="container"><a class="navbar-brand" href="#">نظام رصد المخالفات</a><button data-bs-toggle="collapse"
-                class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
-                    navigation</span><span class="navbar-toggler-icon"></span></button>
+                class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">الرصد</a></li>

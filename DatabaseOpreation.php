@@ -22,6 +22,15 @@ require_once("db_connection.php");
     return $result;
 
  }
+ public static function selectallSelection($table,$condition)
+ {
+   global $con;
+    $q=$con->prepare("select * from $table where $condition");
+    $q->execute();
+    $result=$q->fetchall(); 
+    return $result;
+
+ }
  public static function selectSelection($colums,$table,$condition)
  {
    global $con;
@@ -137,8 +146,7 @@ class displayfromTable
 class pagination
 {
    //public static int $RowsCount;
-   public static int $pageNumber;
-   public static int $RowsCountPerPage;
+   public static int $RowsCountPerPage=5;
 
 
    public static function RowsCount($tableName)
@@ -147,6 +155,25 @@ class pagination
     $RowsCount=count($result);
     return $RowsCount;
    }
+   public static function RowCountWithCondition($tableName,$condition)
+   {
+    $result=DatabaseOpreation::selectallSelection($tableName,$condition);
+    $RowsCount=count($result);
+
+    return $RowsCount;
+   }
+
+   public static function ShowPage($colums,$table,$condition,$offset,$pageNumber)
+   {
+    $offset=$pageNumber*self::$RowsCountPerPage;
+    $result=DatabaseOpreation::selectLimtaion($colums,$table,$condition,$offset,self::$RowsCountPerPage);
+    return $result;
+   }
+
+
+
+
+
 
 }
 
