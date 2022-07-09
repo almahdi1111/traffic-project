@@ -16,7 +16,7 @@ require("DatabaseOpreation.php");
     <link rel="stylesheet" href="assets/css/styles.min.css">
 </head>
 
-<body>
+<body onload="GetMonitoringData('')">
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean">
         <div class="container"><a class="navbar-brand" href="#">نظام رصد المخالفات</a><button data-bs-toggle="collapse"
                 class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
@@ -28,5 +28,6 @@ require("DatabaseOpreation.php");
                 </ul>
             </div>
         </div>
+        
     </nav>
 

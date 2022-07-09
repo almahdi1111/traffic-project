@@ -15,7 +15,7 @@ require("header.php");
                 <div class="float-start float-md-end mt-5 mt-md-0 search-area"><i
                         class="fas fa-search float-start search-icon"></i><input
                         class="float-start float-sm-end custom-search-input" type="search"
-                        placeholder="اكتب رقم اللوحة للبحث" style="color: rgb(255,255,255);" onkeyup="showCustomer(this.value)"></div>
+                        placeholder="اكتب رقم اللوحة للبحث" style="color: rgb(255,255,255);" onkeyup="GetViolationData(this.value)"></div>
             </div>
             <div class="row">
                 <div class="col-12">

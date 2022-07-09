@@ -1,7 +1,21 @@
 <?php 
 require("DatabaseOpreation.php");
-$s=$_GET['q'];
+$s="";
+if (isset($_GET['q']))
+{
+    $s=$_GET['q'];
+}
+
 $results=DatabaseOpreation::selectSelection(" violation.Plate_Number as Plate_Number , typeviolation.Type as Type, plate.TypePlate as TypePlate, location.Address as Address, provinces.Name as provincesName, violation.Date as Date, violation.ImagePath as ImagePath","camera, provinces, plate, violation, typeviolation, location "," ( typeviolation.Id = violation.Id_violation_Type AND provinces.Id = violation.Id_provinces AND plate.Id = violation.Id_plate AND camera.Id = violation.Id_camera AND camera.Id_location = location.Id and Plate_Number like '%$s%' ) order by Date desc");
+if(count($results)==0)
+{
+    echo "
+    <div class='col' style='color:red'>
+    <h1>لا يوجد اي مخالفة بهذا الرقم</h1>
+    </div>
+    ";
+
+}
 foreach ($results as $result)
 {
    echo "
