@@ -8,47 +8,17 @@ require("header.php");
     <div class="container-fluid" style="margin-bottom: 50px;" >
         <div class="card" id="TableSorterCard" style="border-style: none;border-radius: 6.5px;text-align: center;">
             <div class="card-header py-3" style="border-width: 0px;background: rgb(23,25,33);">
-                <p class="d-inline" style="color: rgb(255,255,255);">&nbsp; &nbsp; &nbsp;من:&nbsp;</p><input
-                    type="date">
-                <p class="d-inline" style="color: rgb(255,255,255);">&nbsp; &nbsp; &nbsp;الى:</p><input type="date">
+                <p class="d-inline" style="color: rgb(255,255,255);">&nbsp; &nbsp; &nbsp;من:&nbsp;</p><input id="StartDate"  type="date" onchange="paging(0,'index.php')">
+                <p class="d-inline" style="color: rgb(255,255,255);">&nbsp; &nbsp; &nbsp;الى:</p><input id="EndDate" type="date" onchange="paging(0,'index.php')">
                 <div class="float-start float-md-end mt-5 mt-md-0 search-area"><i
-                        class="fas fa-search float-start search-icon"></i><input
+                        class="fas fa-search float-start search-icon"></i>
+                        <input id="PlateNumber"
                         class="float-start float-sm-end custom-search-input" type="search"
-                        placeholder="اكتب رقم اللوحة للبحث" style="color: rgb(255,255,255);" onkeyup="GetMonitoringData(this.value)"></div>
+                        placeholder="اكتب رقم اللوحة للبحث" style="color: rgb(255,255,255);" onkeyup="paging(0,'index.php')"></div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <div class="table-responsive" style="border-top-style: none;">
-                        <table class="table table-striped table tablesorter" id="ipi-table">
-                            <thead class="thead-dark"
-                                style="background: rgb(33,37,48);border-width: 0px;border-color: rgb(0,0,0);border-bottom-color: #21252F;">
-                                <tr style="border-style: none;border-color: rgba(255,255,255,0);background: #21252f;">
-                                    <th>م</th>
-                                    <th >رقم اللوحة</th>
-                                    <th >المخالفة</th>
-                                    <th >نوع اللوحة</th>
-                                    <th>موقع الرصد</th>
-                                    <th>المحافظة حسب اللوحة</th>
-                                    <th>زمن الرصد</th>
-                                    <th>عرض</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center" id="DataTable">
-                            </tbody>
-                        </table>
-                        <ul class="pagination" >
-                        <?php 
-                        $pageName=substr($_SERVER["SCRIPT_NAME"],9);
-                       $pageCount=pagination::RowsCount("monitoring")/pagination::$RowsCountPerPage;
-                        for($i=0;$i<$pageCount;$i++)
-                        {
-                            echo"<li class='page-item' onclick=\"paging($i,'$pageName')\"><a class='page-link'>".($i+1)."</a></li>";
-                        }
-
-                        
-                        ?>
-               
-                    </ul>
+                <div id="tableDisplay" class="col-12">
+                    
                     </div>
                 </div>
             </div>
