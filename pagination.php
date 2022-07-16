@@ -1,5 +1,6 @@
 
 <?php
+require_once("DatabaseOpreation.php");
 
 class pagination
 {
