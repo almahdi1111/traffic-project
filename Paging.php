@@ -1,5 +1,6 @@
 <?php 
-require("DatabaseOpreation.php");
+require("pagination.php");
+
 
 $pagenumber=$_GET['pagenumber'];
 
@@ -36,13 +37,11 @@ $WhereQuery =null;
 if(!empty($PlateNumber) || $PlateNumber=="0")
 {
     $WhereQuery=$WhereQuery." and Plate_Number like '%$PlateNumber%'";
-    $PlateNumberEnter=true;
 
 
 }
 if(!empty($StartDate))
 {
-    $StartDateEnter=true;
     $WhereQuery=$WhereQuery." and Date between '$StartDate' and '$EndDate' ";
 
 
@@ -139,9 +138,16 @@ echo"</ul>";
 
 else if ($_GET['pageName']=="Detials.php")
 {
+    $WhereQuery =null;
+    $PlateType="";
+
     $PlateNumber= $_GET['PlateNumber'];
+    $PlateType=$_GET['PlateType'];
+    $Violation=$_GET['Violation'];
+    $Location=$_GET['Location'];
     $StartDate=$_GET['StartDate'];
     $EndDate=$_GET['EndDate'];
+
 
 
 echo "<div class='table-responsive' style='background: var(--bs-white);'>
@@ -151,36 +157,44 @@ echo "<div class='table-responsive' style='background: var(--bs-white);'>
         <th>م</th>
         <th>رقم اللوحة</th>
             <th>
-                <select  id='Violation' class='border rounded-pill form-select-sm' onchange='paging(0,\"Detials.php\")'>
-                    <option value='' selected disabled>نوع المخالفة</option>
-";
+                <select  id='Violation' class='border rounded-pill form-select-sm' onchange='paging(0,\"Detials.php\")'>";
+                   echo" <option value='undefined' selected disabled>نوع المخالفة</option>";
                     $result1=DatabaseOpreation::select('typeviolation');
                     foreach($result1 as $result)
                         {
-                           // if(isset($_GET['Violation']))
-                            echo '<option value='.$result['Id'].'>'.$result['Type'].'</option>';
+                            
+                            echo '<option ';
+                            if($Violation==$result['Id'])
+                            echo "selected";
+                            echo' value='.$result['Id'].'>'.$result['Type'].'</option>';
                         }
 echo"
                 </select>
             </th>
             <th class='text-center'>
-            <select id='PlateType' class='border rounded-pill form-select-sm'>
-                    <option value='' selected='' disabled>نوع اللوحة</option>
+            <select id='PlateType' class='border rounded-pill form-select-sm' onchange='paging(0,\"Detials.php\")'>
+                    <option value='undefined' selected='' disabled>نوع اللوحة</option>
 ";
                     $result1=DatabaseOpreation::select('plate');
                     foreach($result1 as $result)
                         {
-                            echo '<option value='.$result['Id'].'>'.$result['TypePlate'].'</option>';
+                            echo '<option ';
+                            if($PlateType==$result['Id'])
+                            echo "selected";
+                            echo ' value='.$result['Id'].'>'.$result['TypePlate'].'</option>';
                         }
             echo"
                 </select></th>
-            <th><select class='border rounded-pill form-select-sm'>
+            <th><select id='Location' class='border rounded-pill form-select-sm' onchange='paging(0,\"Detials.php\")'>
                     <option value='' selected='' disabled>موقع المخالفة</option>
 ";
                     $result1=DatabaseOpreation::select('location');
                     foreach($result1 as $result)
                         {
-                            echo '<option value='.$result['Id'].'>'.$result['Address'].'</option>';
+                            echo '<option ';
+                            if($Location==$result['Id'])
+                            echo "selected";
+                            echo ' value='.$result['Id'].'>'.$result['Address'].'</option>';
                         }
 echo"
                 </select>
@@ -196,16 +210,33 @@ echo"
  
 
 ";
-$WhereQuery =null;
 
 
 if(!empty($PlateNumber) || $PlateNumber=="0")
 {
     $WhereQuery=$WhereQuery." and Plate_Number like '%$PlateNumber%'";
-    $PlateNumberEnter=true;
 
 
 }
+
+if(!($Violation=="undefined"))
+{
+    $WhereQuery=$WhereQuery." and Id_violation_Type='$Violation'";
+
+
+}
+if(!($PlateType=="undefined"))
+{
+    $WhereQuery=$WhereQuery." and Id_plate='$PlateType'";
+
+
+}
+// if(!empty($Location))
+// {
+//     $WhereQuery=$WhereQuery." and location.Id='$Location'";
+
+
+// }
 if(!empty($StartDate))
 {
     $StartDateEnter=true;
@@ -226,7 +257,7 @@ echo "<h3 style='color: green;'>
 عدد النتائج $countRows
 </h3>";
 $results=pagination::ShowPage(" violation.Plate_Number as Plate_Number , typeviolation.Type as Type, plate.TypePlate as TypePlate, location.Address as Address, provinces.Name as provincesName, violation.Date as Date, violation.ImagePath as ImagePath","camera, provinces, plate, violation, typeviolation, location "," ( typeviolation.Id = violation.Id_violation_Type AND provinces.Id = violation.Id_provinces AND plate.Id = violation.Id_plate AND camera.Id = violation.Id_camera AND camera.Id_location = location.Id $WhereQuery ) order by Date desc",null,$pagenumber);
-
+$i=0;
 
 
 if(count($results)==0)
@@ -238,14 +269,16 @@ if(count($results)==0)
     ";
 
 }
+
 else
 {
 foreach ($results as $result)
 {
+    $i++;
+
    echo "
     <tr>
-    <td> </td>
-   <td>".$result["Plate_Number"]."</td>
+    <td>".($pagenumber)*pagination::$RowsCountPerPage+$i."</td>   <td>".$result["Plate_Number"]."</td>
    <td>".$result["Type"]."</td>
    <td>".$result["TypePlate"]."</td>
    <td>".$result["Address"]."</td>

@@ -1,24 +1,3 @@
-
-
-
-  function GetMonitoringData(str) {
-    var xhttp;
-    if (str == null) {
-      return;
-    }
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("tableViolation").innerHTML = this.responseText;
-      }
-    };
-    xhttp.open("POST", "GetMonitoringData.php?q="+str, true);
-    xhttp.send();
-
-    
-}
-
-
 function searchFilter(pagenumber) {
   pagenumber = pagenumber?pagenumber:0;
 
@@ -50,13 +29,14 @@ function paging(pagenumber,pageName) {
   
   
   var PlateNumber= $("#PlateNumber").val();
-  var PlateType=$("#PlateType").val();
- var Violation=$('#Violation').val();
+  var PlateType=$("#PlateType :selected").val();
+ var Violation=$('#Violation :selected').val();
+ var Location=$("#Location :selected").val();
   var StartDate=$("#StartDate").val();
   var EndDate=$("#EndDate").val();
   
 
-  
+  console.log(Violation);
    
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -64,11 +44,10 @@ function paging(pagenumber,pageName) {
     document.getElementById("tableDisplay").innerHTML = this.responseText;
     }
   };
-  xhttp.open("POST", "Paging.php?pagenumber="+pagenumber+"&pageName="+pageName+"&PlateNumber="+ PlateNumber+"&PlateType="+ PlateType+"&Violation="+ Violation+"&StartDate="+ StartDate+"&EndDate="+ EndDate, true);
-  setInterval(function() {
-    xhttp.send();
+  xhttp.open("POST", "Paging.php?pagenumber="+pagenumber+"&pageName="+pageName+"&PlateNumber="+ PlateNumber+"&PlateType="+ PlateType+"&Violation="+ Violation+"&Location="+Location+"&StartDate="+ StartDate+"&EndDate="+ EndDate, true);
+xhttp.send();
 
-}, 100);
+
   
 
 

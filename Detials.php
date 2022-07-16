@@ -1,5 +1,5 @@
 <?php
-use LDAP\Result;
+
 require("header.php");
 
 ?>
