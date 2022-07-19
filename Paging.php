@@ -103,8 +103,8 @@ $i++;
                        class='btn-close' data-bs-dismiss='modal'
                        aria-label='Close'></button></div>
                <div class='modal-body' style='height: 100%;width: 100%;'><img
-                       src='".$result["ImagePath"]."'
-                       style='height: 100%;width: 100%;'></div>
+               src='"."images/".$result["ImagePath"]."'
+                    style='height: 100%;width: 100%;'></div>
                <div class='modal-footer'><button class='btn btn-warning'
                        style='background-color:rgb(255,139,160);' type='button'
                        data-bs-dismiss='modal'>اغلاق</button></div>
